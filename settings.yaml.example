@@ -1,0 +1,10 @@
+---
+ip: "192.168.10.10"
+hostname: "app.dev"
+local_folder: "~/www"
+root_folder: "/home/ubuntu/www"
+mysql_user: "user"
+
+sites:
+    - alias: app
+      folder: /home/vagrant/www/app/public
