@@ -1,14 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Specify minimum Vagrant version and Vagrant API version
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
 
-# Require YAML module
 require 'yaml'
 
-# Read YAML file with box details
 settings = YAML.load_file('settings.yaml')
 
 server_ip = settings['ip']
@@ -17,7 +14,6 @@ local_folder = settings['local_folder']
 root_folder = settings['root_folder']
 mysql_user = settings['mysql_user']
 
-# Create boxes
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
 

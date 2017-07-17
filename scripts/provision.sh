@@ -81,7 +81,7 @@ fi
 LINE="[mysqld]
 bind-address = 0.0.0.0"
 FILE="/etc/mysql/my.cnf"
-sudo grep -q "$VLINE" "$FILE" || echo "$LINE" | sudo tee --append "$FILE" > /dev/null
+sudo grep -q "$LINE" "$FILE" || echo "$LINE" | sudo tee --append "$FILE" > /dev/null
 
 # Usuario con acceso remote a MySQL
 
