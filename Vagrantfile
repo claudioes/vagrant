@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: server_ip
   config.vm.hostname = server_hostname
 
-  config.vm.synced_folder local_folder, root_folder, :owner => "www-data", :group => "www-data"
+  config.vm.synced_folder local_folder, root_folder, :owner => "ubuntu", :group => "www-data", mount_options: ["dmode=775,fmode=664"]
   
   config.vm.provider :virtualbox do |vb|
     vb.memory = "1024"
