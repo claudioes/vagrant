@@ -21,14 +21,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = server_hostname
 
   config.vm.synced_folder local_folder, root_folder, :owner => "ubuntu", :group => "www-data", mount_options: ["dmode=775,fmode=664"]
-  
+
   config.vm.provider :virtualbox do |vb|
     vb.memory = "1024"
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ["modifyvm", :id, "--usb", "off"]
     vb.customize ["modifyvm", :id, "--usbehci", "off"]
-	vb.customize ["modifyvm", :id, "--uartmode1", "disconnected" ]
+    vb.customize ["modifyvm", :id, "--uartmode1", "disconnected" ]
   end
 
   config.vm.provision :shell, :args => [server_hostname, root_folder, mysql_user], path: "scripts/provision.sh"
