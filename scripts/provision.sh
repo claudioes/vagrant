@@ -26,13 +26,23 @@ fi
 # PHP
 
 if ! package_exists 'php' ; then
-	sudo apt-get install -y php php-bcmath php-bz2 php-cli php-curl php-intl php-json php-mbstring php-opcache php-soap php-sqlite3 php-xml php-xsl php-zip php-mysql php-imagick libapache2-mod-php
+	sudo apt-get install -y php php-bcmath php-bz2 php-cli php-curl php-intl php-json php-mbstring php-opcache php-soap php-sqlite3 php-xml php-xsl php-zip php-mysql php-imagick php-gd libapache2-mod-php
 fi
 
-# Python
+# Python 3 (pip)
 
 if ! package_exists 'python3' ; then
 	sudo apt-get install -y python3-pip
+fi
+
+# Python 2.7 (para PyAfipWS)
+
+if ! package_exists 'python' ; then
+    sudo apt-get install -y python python-pip
+
+	# Para compilar M2Crypto son necesarios los siguientes packages
+
+	sudo apt-get install -y swig libssl-dev
 fi
 
 # WKHtml
