@@ -5,6 +5,10 @@ local_folder: "~/www"
 root_folder: "/home/ubuntu/www"
 mysql_user: "user"
 
+alias:
+    - name: app
+      folder: /home/vagrant/www/app/public
+
 sites:
-    - alias: app
+    - name: minim.app
       folder: /home/vagrant/www/app/public

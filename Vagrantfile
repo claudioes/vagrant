@@ -18,8 +18,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
 
   config.vm.network :private_network, ip: server_ip
-  config.vm.hostname = server_hostname
-
   config.vm.synced_folder local_folder, root_folder, :owner => "ubuntu", :group => "www-data", mount_options: ["dmode=775,fmode=664"]
 
   config.vm.provider :virtualbox do |vb|
@@ -33,7 +31,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, :args => [server_hostname, root_folder, mysql_user], path: "scripts/provision.sh"
 
-  settings['sites'].each do |site|
-    config.vm.provision :shell, :args => [site['alias'], site['folder']], path: "scripts/sites.sh"
+  settings['alias'].each do |a|
+    config.vm.provision :shell, :args => [a['name'], site['folder']], path: "scripts/alias.sh"
   end
+
+  settings['sites'].each do |s|
+    config.vm.provision :shell, :args => [s['name'], s['folder']], path: "scripts/sites.sh"
+  end
+  
+  config.hostsupdater.aliases = settings['sites'].map { |site| site['map'] }
 end

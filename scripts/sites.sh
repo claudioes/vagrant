@@ -1,15 +1,20 @@
-#!/bin/bash
-
-ALIAS=$1
+SITE=$1
 FOLDER=$2
 
-echo "Alias /$ALIAS $FOLDER
-	<Directory \"$FOLDER\">
-		Options Indexes FollowSymLinks
-		AllowOverride All
-		Require all granted
-	</Directory>
-" > /etc/apache2/conf-available/$ALIAS.conf
+echo "<VirtualHost *:80>
+    ServerName $SITE
+    ServerAdmin webmaster@localhost
+    DocumentRoot $FOLDER
 
-sudo a2enconf $ALIAS
-sudo systemctl restart apache2
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+    <Directory $FOLDER>
+        Options FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>" > /etc/apache2/sites-available/$SITE.conf
+
+sudo a2ensite $SITE
+sudo systemctl reload apache2

@@ -43,6 +43,25 @@ if ! package_exists 'python' ; then
 	# Para compilar M2Crypto son necesarios los siguientes packages
 
 	sudo apt-get install -y swig libssl-dev
+
+	# Configuración de PyAfipWS
+
+	# Clono el repositorio
+	# git clone https://github.com/reingart/pyafipws.git
+
+	# Creo un entorno virtual de Python 2.7
+	# sudo apt-get install -y virtualenv
+	# virtualenv pyafipenv
+	# source pyafipenv/bin/activate -p python
+
+	# Instalo los módulos necesarios
+	# pip install -r pyafipws/requirements.txt
+	# pip install httplib2==0.9.2
+	# deactive
+
+	# Creo y doy permisos apache sobre la carpeta Cache de PyAfipWs
+	# mkdir pyafipws/cache
+	# chown claudio:www-data pyafipws/cache
 fi
 
 # WKHtml
