@@ -22,7 +22,7 @@ fi
 
 # Entorno virtual para no "contaminar" el espacio global
 
-if ! package_exists 'virtualenv' ; then
+if ! which 'virtualenv' &> /dev/null ; then
     apt-get install -y virtualenv
 fi
 

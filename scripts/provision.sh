@@ -79,7 +79,7 @@ fi
 LINE="[mysqld]
 bind-address = 0.0.0.0"
 FILE="/etc/mysql/my.cnf"
-grep -q "$LINE" "$FILE" || echo "$LINE" | tee --append "$FILE" > /dev/null
+grep -q -F "$LINE" "$FILE" || echo "$LINE" | tee --append "$FILE" > /dev/null
 
 # Usuario con acceso remote a MySQL
 
