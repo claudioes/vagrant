@@ -42,5 +42,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
+    if settings.has_key?("pyafipws") && settings["pyafipws"]
+        config.vm.provision :shell, path: "scripts/pyafipws.sh"
+    end
+
     config.hostsupdater.aliases = settings["sites"].map { |site| site["map"] }
 end
