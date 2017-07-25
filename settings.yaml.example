@@ -1,14 +1,14 @@
 ---
-ip: "192.168.10.10"
-hostname: "app.dev"
-local_folder: "~/www"
-root_folder: "/home/ubuntu/www"
-mysql_user: "user"
+ip: "192.168.10.11"
+mysql_user: "sistema"
 
-alias:
-    - name: app
-      folder: /home/vagrant/www/app/public
+folders:
+  - map: "."
+    to: "/home/ubuntu"
 
 sites:
-    - name: minim.app
-      folder: /home/vagrant/www/app/public
+  - map: minim.dev
+    to: /var/www/html
+    aliases:
+      - map: app
+        to: /home/ubuntu/www/app/public

@@ -1,20 +1,38 @@
-SITE=$1
-FOLDER=$2
+site=$1
+folder=$2
+
+declare -A aliases=$3
+aliasesTXT=""
+if [ -n "$3" ]; then
+    for element in "${!aliases[@]}"
+    do
+        aliasesTXT="${aliasesTXT}
+            Alias /${element} ${aliases[$element]}
+                <Directory \"${aliases[$element]}\">
+                        Options Indexes FollowSymLinks
+                        AllowOverride All
+                        Require all granted
+                </Directory>
+        "
+    done
+fi
 
 echo "<VirtualHost *:80>
-    ServerName $SITE
+    ServerName ${site}
     ServerAdmin webmaster@localhost
-    DocumentRoot $FOLDER
+    DocumentRoot ${folder}
 
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
+    ErrorLog \${APACHE_LOG_DIR}/${site}-error.log
+    CustomLog \${APACHE_LOG_DIR}/${site}-access.log combined
 
-    <Directory $FOLDER>
+    <Directory ${folder}>
         Options FollowSymLinks
         AllowOverride All
         Require all granted
     </Directory>
-</VirtualHost>" > /etc/apache2/sites-available/$SITE.conf
 
-sudo a2ensite $SITE
-sudo systemctl reload apache2
+    ${aliasesTXT}
+</VirtualHost>" > /etc/apache2/sites-available/$site.conf
+
+a2ensite $site
+service apache2 reload
