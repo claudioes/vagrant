@@ -10,8 +10,6 @@ settings = YAML.load_file('settings.yaml')
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/xenial64"
-    config.vm.network :private_network, ip: settings['ip']
-
     config.vm.provider :virtualbox do |vb|
         vb.memory = "1024"
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -21,17 +19,35 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--uartmode1", "disconnected" ]
     end
 
-    if settings.include? "folders"
+    # Private Network IP
+
+    config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
+
+    # Additional Networks
+
+    if settings.has_key?("networks")
+        settings["networks"].each do |network|
+            config.vm.network network["type"] + "_network", ip: network["ip"], bridge: network["bridge"] ||= nil
+        end
+    end
+
+    # Folders
+
+    if settings.has_key?("folders")
         settings["folders"].each do |folder|
             config.vm.synced_folder folder["map"], folder["to"], :owner => "ubuntu", :group => "www-data", mount_options: ["dmode=775,fmode=775"]
         end
     end
 
+    # Provisions
+
     config.vm.provision :shell, :args => [settings['mysql_user'] ||= "user"], path: "scripts/provision.sh"
 
-    if settings.include? "sites"
+    # Sites & Aliases
+
+    if settings.has_key?("sites")
         settings["sites"].each do |site|
-            if site.include? "aliases"
+            if site.has_key?("aliases")
                 aliases = "("
                 site["aliases"].each do |a|
                     aliases += " [" + a["map"] + "]=" + a["to"]
@@ -42,9 +58,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
+    # PyAfipWS
+
     if settings.has_key?("pyafipws") && settings["pyafipws"]
         config.vm.provision :shell, path: "scripts/pyafipws.sh"
     end
+
+    # Hosts Updater
 
     config.hostsupdater.aliases = settings["sites"].map { |site| site["map"] }
 end

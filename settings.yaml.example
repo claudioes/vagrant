@@ -1,7 +1,11 @@
 ---
-ip: "192.168.10.11"
+ip: "192.168.10.10"
 mysql_user: "sistema"
 pyafipws: no
+
+networks:
+  - type: "public"
+    ip: "192.168.2.150"
 
 folders:
   - map: "."
