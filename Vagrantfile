@@ -1,12 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'yaml'
+
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
 
-require 'yaml'
+confDir = File.expand_path(File.dirname(__FILE__))
 
-settings = YAML.load_file('settings.yaml')
+settings = YAML.load_file(confDir + '/settings.yaml')
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/xenial64"
