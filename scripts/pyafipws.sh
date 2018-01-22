@@ -7,7 +7,11 @@ function package_exists() {
 # PyAfipWs solo funciona con Python 2 :(
 
 if ! which 'python' &> /dev/null ; then
-    apt-get install -y python python-pip python-dev
+    apt-get install -y python python-pip
+fi
+
+if ! which 'python-dev' &> /dev/null ; then
+    apt-get install -y python-dev
 fi
 
 # Para compilar M2Crypto son necesarios swig y libssl-dev
