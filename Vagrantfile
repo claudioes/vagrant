@@ -12,13 +12,15 @@ settings = YAML.load_file(confDir + '/settings.yaml')
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "ubuntu/xenial64"
+
     config.vm.provider :virtualbox do |vb|
-        vb.memory = "1024"
+        vb.memory = settings["memory"]
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
         vb.customize ["modifyvm", :id, "--usb", "off"]
         vb.customize ["modifyvm", :id, "--usbehci", "off"]
-        vb.customize ["modifyvm", :id, "--uartmode1", "disconnected" ]
+        vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
 
     # Private Network IP
