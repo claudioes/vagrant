@@ -9,11 +9,11 @@ networks:
 
 folders:
   - map: "."
-    to: "/home/ubuntu"
+    to: "/home/vagrant"
 
 sites:
   - map: minim.dev
     to: /var/www/html
     aliases:
       - map: app
-        to: /home/ubuntu/www/app/public
+        to: /home/vagrant/www/app/public

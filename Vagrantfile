@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     if settings.has_key?("folders")
         settings["folders"].each do |folder|
-            config.vm.synced_folder folder["map"], folder["to"], :owner => "ubuntu", :group => "www-data", mount_options: ["dmode=775,fmode=775"]
+            config.vm.synced_folder folder["map"], folder["to"], :owner => "vagrant", :group => "www-data", mount_options: ["dmode=775,fmode=775"]
         end
     end
 
