@@ -114,3 +114,5 @@ service apache2 reload
 
 apt-get autoclean
 apt-get -f install
+
+npm install gulp-cli -g

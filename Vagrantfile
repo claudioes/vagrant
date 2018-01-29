@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--usbehci", "off"]
         vb.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
         vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+        vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
     end
 
     # Private Network IP
@@ -39,7 +40,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     if settings.has_key?("folders")
         settings["folders"].each do |folder|
-            config.vm.synced_folder folder["map"], folder["to"], :owner => "vagrant", :group => "www-data", mount_options: ["dmode=775,fmode=775"]
+            if folder.has_key?("nfs") && folder["nfs"]
+                config.vm.synced_folder folder["map"], folder["to"], type: "nfs", mount_options: ['actimeo=1', 'nolock']
+            else
+                config.vm.synced_folder folder["map"], folder["to"], :owner => "vagrant", :group => "www-data", mount_options: ["dmode=775,fmode=775"]
+            end
         end
     end
 
