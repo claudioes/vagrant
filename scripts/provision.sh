@@ -77,7 +77,10 @@ fi
 # Acceso remoto a MySQL
 
 LINE="[mysqld]
-bind-address = 0.0.0.0"
+bind-address = 0.0.0.0
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+"
 FILE="/etc/mysql/my.cnf"
 grep -q -F "$LINE" "$FILE" || echo "$LINE" | tee --append "$FILE" > /dev/null
 
