@@ -1,19 +1,19 @@
 ---
 ip: "192.168.10.10"
 memory: 1024
-mysql_user: "sistema"
+mysql_user: user
 pyafipws: no
 
 networks:
-  - type: "public"
-    ip: "192.168.2.150"
+  - type: public
+    ip: "192.168.2.1"
 
 folders:
-  - map: "."
-    to: "/home/vagrant"
+  - map: ~/
+    to: /home/vagrant
 
 sites:
-  - map: minim.dev
+  - map: example.test
     to: /var/www/html
     aliases:
       - map: app
